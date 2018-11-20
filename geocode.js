@@ -4,5 +4,7 @@ Request.get("https://geocode.xyz/Rueras+Graubünden?json=1?region=CH", (error, r
   if (error) {
     return console.dir(error)
   }
-  console.dir(JSON.parse(body))
+  var apiResponse = JSON.parse(body)
+  console.log(apiResponse.longt)
+  console.log(apiResponse.latt)
 })
