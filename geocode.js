@@ -9,10 +9,10 @@ Request.get("https://geocode.xyz/Rueras+Graubünden?json=1?region=CH", (error, r
 
   var apiResponse = JSON.parse(body)
 
-  console.log(apiResponse.longt)
   console.log(apiResponse.latt)
+  console.log(apiResponse.longt)
 
-  fs.appendFile("coordinates.csv", apiResponse.longt + ", " + apiResponse.latt + "," + "\n", function(error) {
+  fs.appendFile("coordinates.csv", apiResponse.latt + ", " + apiResponse.longt + "," + "\n", function(error) {
     if (error) {
       console.log("append failed")
     } else {
