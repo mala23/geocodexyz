@@ -2,11 +2,11 @@ var request = require('request')
 var fs = require('fs')
 var readcsv = require('readcsv')
 
-readcsv(true, './csv_source/solar.csv', (err, data) => {
-  if(err) { return console.log(err) }
-  data.forEach(line => {
-
-    setTimeout(function() {
+const geoCode = (lines, next) => {
+    var line = lines[0]
+    if(!line) {
+      return next()
+    }
     //console.log(line.Anlage_Ort);
     request.get(('https://geocode.xyz/' + line.Anlage_PLZ + '?json=1?region=CH'), (error, response, body) => {
       
@@ -28,8 +28,20 @@ readcsv(true, './csv_source/solar.csv', (err, data) => {
         }
 
       })
+
+      lines.shift()  
+
+      setTimeout( () => {
+        geoCode(lines, next)
+      },1000)
+
     })
-    }, 5000)
+}
+
+readcsv(true, './csv_source/solar.csv', (err, data) => {
+  if(err) { return console.log(err) }
+  geoCode(data, () => {
+    console.log('we have data')
   })
 })
 
