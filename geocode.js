@@ -7,19 +7,20 @@ const geoCode = (lines, next) => {
     if(!line) {
       return next()
     }
-    //console.log(line.Anlage_Ort);
-    request.get(('https://geocode.xyz/' + line.Anlage_PLZ + '?json=1?region=CH'), (error, response, body) => {
-      
+    //console.log(('https://maps.googleapis.com/maps/api/geocode/json?address=' + line.Anlage_PLZ + ',+Switzerland' + '&key=AIzaSyCDvW_uvyPe-L_bjFrcYiWLsbOP1sbq7B4'))
+    request.get(('https://maps.googleapis.com/maps/api/geocode/json?address=' + line.Anlage_PLZ + ',+Switzerland' + '&key=AIzaSyCDvW_uvyPe-L_bjFrcYiWLsbOP1sbq7B4'), (error, response, body) => {
+
       if (error) {
         return console.dir(error)
       }
 
-      var apiResponse = JSON.parse(body)
+      let apiResponse = JSON.parse(body)
+      let lat = apiResponse.results[0].geometry.location.lat
+      let lng = apiResponse.results[0].geometry.location.lng
 
-      console.log(apiResponse.latt)
-      console.log(apiResponse.longt)
-
-      fs.appendFile('coordinates.csv', line.Anlage_Ort + ", " + line.Anlage_PLZ + ", " +  apiResponse.latt + ", " + apiResponse.longt + "," + "\n", function(error) {
+      console.log(lat)
+      console.log(lng)
+      fs.appendFile('coordinates.csv', line.Anlage_Ort + ", " + line.Anlage_PLZ + ", " +  lat + ", " + lng + "," + "\n", function(error) {
 
         if (error) {
           console.log('append failed')
@@ -29,7 +30,7 @@ const geoCode = (lines, next) => {
 
       })
 
-      lines.shift()  
+      lines.shift()
 
       setTimeout( () => {
         geoCode(lines, next)
@@ -38,10 +39,9 @@ const geoCode = (lines, next) => {
     })
 }
 
-readcsv(true, './csv_source/solar.csv', (err, data) => {
+readcsv(true, './csv_source/solar_2.csv', (err, data) => {
   if(err) { return console.log(err) }
   geoCode(data, () => {
     console.log('we have data')
   })
 })
-
