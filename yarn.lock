@@ -214,6 +214,10 @@ qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
 
+readcsv@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/readcsv/-/readcsv-1.2.1.tgz#7ea46ba776b6bbd047072802e12ddb6cebd241e2"
+
 request@^2.88.0:
   version "2.88.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
