@@ -39,7 +39,7 @@ const geoCode = (lines, next) => {
     })
 }
 
-readcsv(true, './csv_source/solar.csv', (err, data) => {
+readcsv(true, './csv_source/solar_pt2.csv', (err, data) => {
   if(err) { return console.log(err) }
   geoCode(data, () => {
     console.log('we have data')
