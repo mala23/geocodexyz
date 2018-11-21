@@ -29,7 +29,7 @@ readcsv(true, './csv_source/solar.csv', (err, data) => {
 
       })
     })
-    }, 1000)
+    }, 5000)
   })
 })
 
