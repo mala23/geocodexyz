@@ -38,7 +38,7 @@ const geoCode = (lines, next) => {
     })
 }
 
-readcsv(true, './csv_source/water3.csv', (err, data) => {
+readcsv(true, './csv_source/wind.csv', (err, data) => {
   if(err) { return console.log(err) }
   geoCode(data, () => {
     console.log('we have data')
