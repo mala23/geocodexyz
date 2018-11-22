@@ -7,8 +7,7 @@ const geoCode = (lines, next) => {
     if(!line) {
       return next()
     }
-    //console.log(('https://maps.googleapis.com/maps/api/geocode/json?address=' + line.Anlage_PLZ + ',+Switzerland' + '&key=AIzaSyCDvW_uvyPe-L_bjFrcYiWLsbOP1sbq7B4'))
-    request.get(('https://maps.googleapis.com/maps/api/geocode/json?address=' + line.Gemeinde + ',+Switzerland' + '&key=AIzaSyCDvW_uvyPe-L_bjFrcYiWLsbOP1sbq7B4'), (error, response, body) => {
+    request.get(('https://maps.googleapis.com/maps/api/geocode/json?address=' + encodeURIComponent(line.Ort) + ',+Switzerland' + '&key=AIzaSyCDvW_uvyPe-L_bjFrcYiWLsbOP1sbq7B4'), (error, response, body) => {
 
       if (error) {
         return console.dir(error)
@@ -20,7 +19,7 @@ const geoCode = (lines, next) => {
 
       console.log(lat)
       console.log(lng)
-      fs.appendFile('coordinates.csv', line.Gemeinde + ", " +  lat + ", " + lng + "," + "\n", function(error) {
+      fs.appendFile('coordinates.csv', line.Ort + ", " +  lat + ", " + lng + "," + "\n", function(error) {
 
         if (error) {
           console.log('append failed')
@@ -34,12 +33,12 @@ const geoCode = (lines, next) => {
 
       setTimeout( () => {
         geoCode(lines, next)
-      },1000)
+      })
 
     })
 }
 
-readcsv(true, './csv_source/wind.csv', (err, data) => {
+readcsv(true, './csv_source/water3.csv', (err, data) => {
   if(err) { return console.log(err) }
   geoCode(data, () => {
     console.log('we have data')
