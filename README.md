@@ -9,6 +9,9 @@ One branch uses geocode.xyz api, another google geocode api.
 $ cat yourfile | sed -Ee 's#(([^,]+),)#"\2",#g' > outputfile
 //then do:
 $ cat outputfile | sed -Ee 's#(([^,]+)$)#"\2"#g' > secondoutputfile
+
+//In VIM:
+:%s/,\(\s\|\n\)\@!/","/
 ```
 
 #To-Dos
