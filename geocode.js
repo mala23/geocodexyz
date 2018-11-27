@@ -7,7 +7,6 @@ const geoCode = (lines, next) => {
     if(!line) {
       return next()
     }
-    console.log(encodeURIComponent(line.Location))
     request.get(('https://maps.googleapis.com/maps/api/geocode/json?address=' + encodeURIComponent(line.Location) + ',+Switzerland' + '&key=AIzaSyCDvW_uvyPe-L_bjFrcYiWLsbOP1sbq7B4'), (error, response, body) => {
 
       if (error) {
@@ -15,12 +14,15 @@ const geoCode = (lines, next) => {
       }
 
       let apiResponse = JSON.parse(body)
-      console.log(apiResponse)
-      let zip = apiResponse.results[0].address_components[5]
+      console.log(line.Location)
+      console.log(line.Production)
+      console.log(line.Startup)
+      let lat = apiResponse.results[0].geometry.location.lat
+      let lng = apiResponse.results[0].geometry.location.lng
+      console.log(lat)
+      console.log(lng)
 
-      console.log(zip)
-      /*
-      fs.appendFile('data_zip.csv', line.Ort + "," + line.PLZ + ", " +  lat + ", " + lng + "," + "\n", function(error) {
+      fs.appendFile('water_complete.csv', line.Location + "," + line.Production + "," + line.Startup + ", " +  lat + ", " + lng + "," + "\n", function(error) {
 
         if (error) {
           console.log('append failed')
@@ -29,7 +31,6 @@ const geoCode = (lines, next) => {
         }
 
       })
-      */
 
       lines.shift()
 
@@ -40,7 +41,7 @@ const geoCode = (lines, next) => {
     })
 }
 
-readcsv(true, './csv_source/zips/water_data.csv', (err, data) => {
+readcsv(true, './csv_source/zips/water.csv', (err, data) => {
   if(err) { return console.log(err) }
   geoCode(data, () => {
     console.log('we have data')
