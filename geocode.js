@@ -22,7 +22,7 @@ const geoCode = (lines, next) => {
       console.log(lat)
       console.log(lng)
 
-      fs.appendFile('water_complete.csv', line.Location + "," + line.Production + "," + line.Startup + ", " +  lat + ", " + lng + "," + "\n", function(error) {
+      fs.appendFile('solar_complete.csv', line.Location + "," + line.Production + "," + line.Startup + ", " +  lat + ", " + lng + "," + "\n", function(error) {
 
         if (error) {
           console.log('append failed')
@@ -41,7 +41,7 @@ const geoCode = (lines, next) => {
     })
 }
 
-readcsv(true, './csv_source/zips/water.csv', (err, data) => {
+readcsv(true, './csv_source/zips/solar.csv', (err, data) => {
   if(err) { return console.log(err) }
   geoCode(data, () => {
     console.log('we have data')
